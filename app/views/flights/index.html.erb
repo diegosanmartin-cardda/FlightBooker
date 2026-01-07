@@ -1,0 +1,33 @@
+<h1> Search Flights dropdown</h1>
+
+<%= form_with url: flights_path, method: :get, local: true do |form| %>
+    <div>
+        <%= form.select(:departure_airport_id, options_from_collection_for_select(Airport.all, :id, :location), prompt: "Select Departure Airport") %>
+    </div>
+    <div>
+        <%= form.select(:arrival_airport_id, options_from_collection_for_select(Airport.all, :id, :location), prompt: "Select Arrival Airport") %>
+    </div>
+    <div>
+        <%= form.date_field(:departure_date) %>
+    </div>
+    <div>
+        <%= form.submit("Search Flights") %>
+    </div>
+<% end %>
+
+<h1> Available Flights </h1>
+
+<%= form_with url: bookings_path, method: :post, local: true do |form| %>
+    <%= form.collection_radio_buttons :flight_id, @flights.order(:departure), :id, :display_label do |b| %>
+        <div>
+            <%= b.radio_button %>
+            <%= b.label %>
+        </div>
+    <% end %>
+
+    <hr>
+
+    <div>
+        <%= form.submit("Book Selected Flight") %>
+    </div>
+<% end %>
