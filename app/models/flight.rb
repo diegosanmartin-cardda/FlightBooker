@@ -2,8 +2,8 @@ class Flight < ApplicationRecord
   belongs_to :departure_airport, class_name: "Airport"
   belongs_to :arrival_airport,  class_name: "Airport"
 
-  has_many :user_flights, foreign_key: :passenger_flight_id, dependent: :destroy
-  has_many :passengers, through: :user_flights
+  has_many :user_flights
+  has_many :users, through: :user_flights
 
   scope :upcoming, -> { where("departure >= ?", Time.now).order(departure: :asc) }
   scope :now , -> { where("departure >= ?", Time.now) }

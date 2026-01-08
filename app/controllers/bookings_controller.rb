@@ -10,7 +10,7 @@ class BookingsController < ApplicationController
         @flight = Flight.find(params[:flight_id])
         @user = current_user
         Rails.logger.info "Booking flight #{@flight.id} for user #{@user.id}"
-        @booking = @user.
+        @booking = UserFlight.new(user: @user, flight: @flight)
         if @booking.save
             redirect_to root_path, notice: "Flight booked successfully."
         else
